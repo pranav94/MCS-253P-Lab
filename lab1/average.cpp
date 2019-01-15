@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <string.h>
+#include <stdlib.h>
 using namespace std;
 
 void printAverage(ifstream &inputFile)
@@ -12,7 +14,7 @@ void printAverage(ifstream &inputFile)
 		sum += currentNumber;
 		count++;
 	}
-	cout << "The average is: " << sum / count << endl;
+	cout << "The average is: " << sum / (count == 0 ? 1 : count) << endl;
 }
 
 void readFile(char *fileName)
