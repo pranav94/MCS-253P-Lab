@@ -1,43 +1,37 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 using namespace std;
 
-void printAverage(double sum, int count)
+void printAverage(ifstream &inputFile)
 {
-        if (count == 0) {
-                cout << "The average is 0" << endl;
-                return;
-        }
-        cout << "The average is: " << sum/count << endl;
-}
-
-void readFile(string fileName)
-{
-	double sum = 0;
-	double count = 0;
-	double currentNumber = 0;
-	ifstream inputFile(fileName.c_str());
-	if (inputFile.good())
+	double sum = 0.0;
+	int count = 0;
+	double currentNumber = 0.0;
+	while (inputFile >> currentNumber)
 	{
-		while (inputFile >> currentNumber)
-		{
-			sum += currentNumber;
-			count += 1;
-		}
-	} else
-	{
-		cout << "File does not exist" << endl;
+		sum += currentNumber;
+		count++;
 	}
-	inputFile.close();
-	printAverage(sum, count);
+	cout << "The average is: " << sum / count << endl;
 }
 
-int main()
+void readFile(char *fileName)
 {
-	string fileName;
-	cout << "Enter the name of the input file:" << endl;
-	getline (cin, fileName);
+	ifstream inputFile(fileName);
+	if (inputFile.good())
+		printAverage(inputFile);
+	else
+		cout << "File does not exist" << endl;
+
+	inputFile.close();
+}
+
+int main(int argc, char **argv)
+{
+	char fileName[] = "standardTestInput.txt";
+	if (argc == 2)
+		strcpy(fileName, argv[1]);
+
 	readFile(fileName);
 	return 0;
 }
