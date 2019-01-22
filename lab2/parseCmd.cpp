@@ -42,7 +42,8 @@ void readLine()
 {
 	char command[STRMAX];
 	cin.getline(command, STRMAX);
-	printTokens(command);
+	if (strlen(command) > 1)
+		printTokens(command);
 }
 
 int main()
