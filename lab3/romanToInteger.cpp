@@ -31,9 +31,9 @@ int getInteger(char *s)
 {
     int op = 0;
     while (*s)
-        if (*s + 1 && getValue(*s) < getValue(*s + 1))
+        if (*(s + 1) && getValue(*s) < getValue(*(s + 1)))
         {
-            op += getValue(*s + 1) - getValue(*s);
+            op += getValue(*(s + 1)) - getValue(*s);
             s += 2;
         }
         else
