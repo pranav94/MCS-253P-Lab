@@ -1,0 +1,141 @@
+Script started on Tue Jan 29 02:11:49 2019
+]0;pudupash@rip-riley:~/lab/lab3[?1034hpudupash@rip-riley 02:11:50 ~/lab/lab3 
+$ gdb romanto[K[KToInteger
+[?1034hGNU gdb (GDB) 7.12
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-pc-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from romanToInteger...done.
+(gdb) br 10
+Breakpoint 1 at 0x400927: file romanToInteger.cpp, line 10.
+(gdb) br 41
+Breakpoint 2 at 0x400a27: file romanToInteger.cpp, line 41.
+(gdb) run
+Starting program: /home/pudupash/lab/lab3/romanToInteger 
+warning: File "/pkg/gcc/5.4.0/lib64/libstdc++.so.6.0.21-gdb.py" auto-loading has been declined by your `auto-load safe-path' set to "$debugdir:$datadir/auto-load:/home/pudupash/cs238p/xv6-public/.gdbinit".
+To enable execution of this file add
+	add-auto-load-safe-path /pkg/gcc/5.4.0/lib64/libstdc++.so.6.0.21-gdb.py
+line to your configuration file "/home/pudupash/.gdbinit".
+To completely disable this security protection add
+	set auto-load safe-path /
+line to your configuration file "/home/pudupash/.gdbinit".
+For more information about this security protection see the
+"Auto-loading safe path" section in the GDB manual.  E.g., run from the shell:
+	info "(gdb)Auto-loading safe path"
+XV
+
+Breakpoint 2, getInteger (s=0x7fffffffd812 "") at romanToInteger.cpp:41
+41	    return op;
+(gdb) bt
+#0  getInteger (s=0x7fffffffd812 "") at romanToInteger.cpp:41
+#1  0x0000000000400a7a in readLine () at romanToInteger.cpp:49
+#2  0x0000000000400ac8 in main () at romanToInteger.cpp:55
+(gdb) info frame
+Stack level 0, frame at 0x7fffffffd810:
+ rip = 0x400a27 in getInteger (romanToInteger.cpp:41); saved rip = 0x400a7a
+ called by frame at 0x7fffffffda30
+ source language c++.
+ Arglist at 0x7fffffffd800, args: s=0x7fffffffd812 ""
+ Locals at 0x7fffffffd800, Previous frame's sp is 0x7fffffffd810
+ Saved registers:
+  rbx at 0x7fffffffd7f8, rbp at 0x7fffffffd800, rip at 0x7fffffffd808
+(gdb) n
+42	}
+(gdb) n
+XV => 15
+readLine () at romanToInteger.cpp:50
+50	}
+(gdb) n
+main () at romanToInteger.cpp:54
+54	    for (;;)
+(gdb) bt
+#0  main () at romanToInteger.cpp:54
+(gdb) c
+Continuing.
+II
+
+Breakpoint 1, getValue (roman=73 'I') at romanToInteger.cpp:12
+12	        return 1;
+(gdb) c
+Continuing.
+
+Breakpoint 1, getValue (roman=73 'I') at romanToInteger.cpp:12
+12	        return 1;
+(gdb) s
+28	}
+(gdb) s
+getInteger (s=0x7fffffffd810 "II") at romanToInteger.cpp:40
+40	            op += getValue(*s++);
+(gdb) c
+Continuing.
+
+Breakpoint 1, getValue (roman=73 'I') at romanToInteger.cpp:12
+12	        return 1;
+(gdb) c
+Continuing.
+
+Breakpoint 1, getValue (roman=73 'I') at romanToInteger.cpp:12
+12	        return 1;
+(gdb) c
+Continuing.
+
+Breakpoint 2, getInteger (s=0x7fffffffd812 "") at romanToInteger.cpp:41
+41	    return op;
+(gdb) c
+Continuing.
+II => 2
+^C
+Program received signal SIGINT, Interrupt.
+0x00007ffff7268f70 in __read_nocancel () from /lib64/libc.so.6
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 26090] will be killed.
+
+Quit anyway? (y or n) y
+]0;pudupash@rip-riley:~/lab/lab3pudupash@rip-riley 02:13:28 ~/lab/lab3 
+$ make clean
+echo -------Removing executable program urlParse----------
+-------Removing executable program urlParse----------
+/bin/rm urlParse
+echo -------Removing executable program countChars----------
+-------Removing executable program countChars----------
+/bin/rm countChars
+echo -------Removing executable program romanToInteger----------
+-------Removing executable program romanToInteger----------
+/bin/rm romanToInteger
+]0;pudupash@rip-riley:~/lab/lab3pudupash@rip-riley 02:13:36 ~/lab/lab3 
+$ cat Makefile 
+CXXFLAGS=-std=c++11 -Wpedantic -Wall -Wextra -Werror -Wzero-as-null-pointer-constant -Weffc++
+CFLAGS=-std=c99 -pedantic -Wall -Wextra -Werror -ansi -Wwrite-strings -Weffc++
+
+main: urlParse.cpp countChars.cpp
+	echo -------Compiling urlParse.cpp to create executable urlParse---------
+	g++ -ggdb $(CXXFLAGS) urlParse.cpp -o urlParse
+	echo -------Compiling countChars.cpp to create executable countChars---------
+	g++ -ggdb $(CXXFLAGS) countChars.cpp -o countChars
+	echo -------Compiling romanToInteger.cpp to create executable romanToInteger---------
+	g++ -ggdb $(CXXFLAGS) romanToInteger.cpp -o romanToInteger
+
+clean:
+	echo -------Removing executable program urlParse----------
+	/bin/rm urlParse
+	echo -------Removing executable program countChars----------
+	/bin/rm countChars
+	echo -------Removing executable program romanToInteger----------
+	/bin/rm romanToInteger
+]0;pudupash@rip-riley:~/lab/lab3pudupash@rip-riley 02:13:40 ~/lab/lab3 
+$ exit
+exit
+
+Script done on Tue Jan 29 02:13:50 2019

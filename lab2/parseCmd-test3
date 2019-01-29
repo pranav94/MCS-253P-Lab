@@ -1,0 +1,3 @@
+ls       |       grep -r "new"
+ls|      grep -r new
+ls        |grep -r new|sort

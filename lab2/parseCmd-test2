@@ -1,0 +1,3 @@
+ls | grep -r "new" > newFile
+ls|grep -r new 1&2> newFile
+ls |grep -r new|sort 1 & 2 > newFile
