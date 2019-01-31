@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 using namespace std;
-#define STRMAX 100
+#define STRMAX 1000
 #define NEWLINE 10
 #define TAB 9
 
@@ -28,16 +28,22 @@ void printChar(int i)
 
 void printCounts()
 {
-    int total = 0, whitespace = 0;
-    for (int i = 127; i >= 0; i--)
+    int other = 0, whitespace = 0;
+    for (int i = 32; i <= 126; i++)
     {
-        total += counts[i];
         whitespace += isspace((char)i) ? counts[i] : 0;
         if (counts[i] > 0)
             printChar(i);
     }
+    for (int i = 31; i >= 0; i--)
+    {
+        if(isspace((char)i))
+            whitespace += counts[i];
+        else
+            other += counts[i];
+    }
     cout << "Whitespace characters: " << whitespace << endl;
-    cout << "Other characters: " << total - whitespace << endl;
+    cout << "Other characters: " << other << endl;
 }
 
 void countChars(char *str)
