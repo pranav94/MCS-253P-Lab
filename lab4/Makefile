@@ -1,4 +1,4 @@
-CXXFLAGS=-std=c++11
+CXXFLAGS=-std=c++11 -Wpedantic -Wall -Wextra -Werror -Wzero-as-null-pointer-constant -Weffc++
 CFLAGS=-std=c99 -pedantic -Wall -Wextra -Werror -ansi -Wwrite-strings -Weffc++
 
 main: product.cpp polish.cpp
