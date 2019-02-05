@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stack>
+#include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
 using namespace std;
 #define STRMAX 1000
 

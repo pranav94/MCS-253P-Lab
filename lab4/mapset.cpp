@@ -1,8 +1,8 @@
-#include <iostream>
 #include <fstream>
-#include <sstream>
 #include <set>
 #include <map>
+#include <iterator>
+#include <algorithm>
 using namespace std;
 
 void readStopWords(set<string> &stopwords)

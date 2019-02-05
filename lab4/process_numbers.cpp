@@ -1,7 +1,7 @@
-#include <iostream>
 #include <fstream>
-#include <sstream>
 #include <vector>
+#include <iterator>
+#include <algorithm>
 using namespace std;
 
 bool isEven(int i)
