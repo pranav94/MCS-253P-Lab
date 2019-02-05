@@ -82,9 +82,7 @@ void evaluatePolish(char *expression)
     while (token)
     {
         if (isOperator(token))
-        {
             s.push(makeOperation(s, token));
-        }
         else if (isCommand(token))
             evaluateCommand(token, s);
         else
