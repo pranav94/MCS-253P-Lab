@@ -31,8 +31,14 @@ void productExceptSelf(vector<int> input)
 
 int main()
 {
-    vector<int> input{10, 3, 5, 6, 2}; 
+    vector<int> input{10, 3, 5, 6, 2};
+    vector<int> zeros{10, 3, 5, 6, 0, 2};
+    vector<int> empty{};
+    vector<int> negatives{-12, 25, -20, 45};
     productExceptSelf(input);
+    productExceptSelf(zeros);
+    productExceptSelf(empty);
+    productExceptSelf(negatives);
     return 0;
 }
 
