@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stack>
 #include <string.h>
 #include <algorithm>
 #include <stdio.h>
