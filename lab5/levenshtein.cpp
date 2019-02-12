@@ -31,8 +31,7 @@ int getDistance(string s1, string s2, vector<vector<int>> &dp)
             if (s1[i - 1] == s2[j - 1])
                 dp[i][j] = dp[i - 1][j - 1];
             else
-                dp[i][j] = 1 + min({dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]});
-
+                dp[i][j] = 1 + min(min(dp[i][j - 1], dp[i - 1][j]), dp[i - 1][j - 1]);
     return dp[n][m];
 }
 
