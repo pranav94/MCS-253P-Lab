@@ -6,10 +6,9 @@ using namespace std;
 
 typedef pair<int, int> p;
 
-vector<p> *G;
 vector<int> distances;
 
-int findMSTWeight(int N)
+int findMSTWeight(vector<vector<p>> G, int N)
 {
     priority_queue<p, vector<p>, greater<p>> Q;
     distances.assign(N + 1, INT_MAX);
@@ -49,7 +48,7 @@ void readTest()
 {
     int n, e;
     cin >> n;
-    G = new vector<p>[n + 1];
+    vector<vector<p>> G(n + 1);
     cin >> e;
     for (int i = 0; i < e; i++)
     {
@@ -60,7 +59,7 @@ void readTest()
         G[u].push_back(make_pair(v, w));
         G[v].push_back(make_pair(u, w));
     }
-    cout << findMSTWeight(n) << endl;
+    cout << findMSTWeight(G, n) << endl;
 }
 
 int main()
