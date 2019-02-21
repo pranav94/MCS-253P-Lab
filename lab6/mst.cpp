@@ -6,11 +6,10 @@ using namespace std;
 
 typedef pair<int, int> p;
 
-vector<int> distances;
-
 int findMSTWeight(vector<vector<p>> G, int N)
 {
     priority_queue<p, vector<p>, greater<p>> Q;
+    vector<int> distances;
     distances.assign(N + 1, INT_MAX);
     distances[1] = 0;
     vector<int> weights(N, 0);
