@@ -6,12 +6,10 @@ using namespace std;
 
 typedef pair<int, int> p;
 
-vector<int> *G;
-vector<int> distances;
-
-int Dijkstra(int N)
+int Dijkstra(vector<vector<int>> &G, int N)
 {
     priority_queue<p, vector<p>, greater<p>> Q;
+    vector<int> distances;
     distances.assign(N + 1, INT_MAX);
     distances[1] = 0;
     Q.push({0, 1});
@@ -29,9 +27,8 @@ int Dijkstra(int N)
     return distances[N];
 }
 
-void buildGraph(int N)
+void buildGraph(vector<vector<int>> &G, int N)
 {
-    G = new vector<int>[N + 1];
     for (int i = 1; i <= N; i++)
     {
         if (i + 1 <= N)
@@ -43,8 +40,9 @@ void buildGraph(int N)
 
 void printShortestdistancesance(int N)
 {
-    buildGraph(N);
-    cout << Dijkstra(N) << endl;
+    vector<vector<int>> G(N+1);
+    buildGraph(G, N);
+    cout << Dijkstra(G, N) << endl;
 }
 
 void readTests(vector<int> &tests)
