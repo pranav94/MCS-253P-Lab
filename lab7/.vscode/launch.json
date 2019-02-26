@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MCS-OS",
+            "request": "launch",
+            "mainClass": "MCSOS"
+        }
+    ]
+}
