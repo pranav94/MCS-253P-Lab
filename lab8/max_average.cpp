@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <iostream>
+#include <climits>
 using namespace std;
 
 typedef pair<int, int> p;
