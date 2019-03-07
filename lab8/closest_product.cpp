@@ -15,15 +15,14 @@ int getClosest(vector<int> arr, int val1, int val2, int target)
 
 int binarySearch(vector<int> arr, int i, int n, int target)
 {
-    if (target <= arr[0])
-        return 0;
+    if (target <= arr[i])
+        return i;
     if (target >= arr[n - 1])
         return n - 1;
-
-    int j = n, mid = 0;
+    int j = n, mid = i;
     while (i < j)
     {
-        mid = (i + j) >> 2;
+        mid = (i + j) / 2;
 
         if (arr[mid] == target)
             return mid;
@@ -49,14 +48,14 @@ int findClosestProductIndex(vector<int> arr, int index, int value)
 {
     if (value == 0)
         return index == 0 ? index + 1 : index - 1;
-    int key = arr[index] / value;
+    int key = value / arr[index];
     if (index == 0)
-        return binarySearch(arr, 1, (int)arr.size() - 1, key);
+        return binarySearch(arr, 1, (int)arr.size(), key);
     if (index == (int)arr.size() - 1)
-        return binarySearch(arr, 0, index - 1, key);
+        return binarySearch(arr, 0, index, key);
 
-    int lindex = binarySearch(arr, 0, index - 1, key);
-    int rindex = binarySearch(arr, index + 1, (int)arr.size() - 1, key);
+    int lindex = binarySearch(arr, 0, index, key);
+    int rindex = binarySearch(arr, index + 1, (int)arr.size(), key);
 
     int prod1 = arr[lindex] * arr[index];
     int prod2 = arr[rindex] * arr[index];
@@ -98,7 +97,7 @@ int main()
     arr = {2, 4, 5, 1, 5, 8};
     result = getClosestPair(arr, 10);
     cout << endl
-         << "A: {2, 4, 5, 1, -2, 5, 8}, P: 10" << endl
+         << "A: {2, 4, 5, 1, 5, 8}, P: 10" << endl
          << "X1: " << arr[result.first] << "\tX2: " << arr[result.second] << endl;
 
     arr = {2, 4, 0, 1, 5, 8};
