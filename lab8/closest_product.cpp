@@ -5,76 +5,90 @@ using namespace std;
 
 typedef pair<int, int> p;
 
-int getNegativeCount(vector<int> arr)
+int getClosest(vector<int> arr, int val1, int val2, int target)
 {
-    int neg = 0;
-    for (auto &v : arr)
-    {
-        if (v >= 0)
-            return neg;
-        neg++;
-    }
-    return neg;
+    if (target - arr[val1] >= arr[val2] - target)
+        return val2;
+    else
+        return val1;
 }
 
-p findClosestPair(vector<int> arr, int left, int right, int product, bool pos)
+int binarySearch(vector<int> arr, int i, int n, int target)
 {
-    p result = make_pair(left, right - 1);
-    while (left < right)
+    if (target <= arr[0])
+        return 0;
+    if (target >= arr[n - 1])
+        return n - 1;
+
+    int j = n, mid = 0;
+    while (i < j)
     {
-        int temp = arr[left] * arr[right];
-        if (abs(arr[result.first] * arr[result.second] - product) < abs(temp - product))
-            result = make_pair(left, right);
-        if (temp > product)
-            pos ? right-- : left++;
-        else if (temp < product)
-            pos ? left++ : right--;
+        mid = (i + j) >> 2;
+
+        if (arr[mid] == target)
+            return mid;
+
+        if (target < arr[mid])
+        {
+            if (mid > 0 && target > arr[mid - 1])
+                return getClosest(arr, mid - 1, mid, target);
+            j = mid;
+        }
         else
-            return make_pair(left, right);
+        {
+            if (mid < n - 1 && target < arr[mid + 1])
+                return getClosest(arr, mid, mid + 1, target);
+            i = mid + 1;
+        }
     }
-    return result;
+
+    return mid;
 }
 
-p findPosPair(vector<int> arr, int index, int product)
+int findClosestProductIndex(vector<int> arr, int index, int value)
 {
-    int left = index;
-    int right = arr.size() - 1;
-    return findClosestPair(arr, left, right, product, true);
-}
+    if (value == 0)
+        return index == 0 ? index + 1 : index - 1;
+    int key = arr[index] / value;
+    if (index == 0)
+        return binarySearch(arr, 1, (int)arr.size() - 1, key);
+    if (index == (int)arr.size() - 1)
+        return binarySearch(arr, 0, index - 1, key);
 
-p findNegPair(vector<int> arr, int index, int product)
-{
-    int left = 0;
-    int right = index;
-    return findClosestPair(arr, left, right, product, false);
-}
+    int lindex = binarySearch(arr, 0, index - 1, key);
+    int rindex = binarySearch(arr, index + 1, (int)arr.size() - 1, key);
 
-p getSmallestPair(vector<int> arr, p p1, p p2, int prod)
-{
-    if (p1.first == p1.second)
-        return p2;
-    if (p2.first == p2.second)
-        return p1;
-    int v1 = arr[p1.first] * arr[p1.second];
-    int v2 = arr[p2.first] * arr[p2.second];
-    if (abs(v1 - prod) <= abs(v2 - prod))
-        return p1;
-    return p2;
+    int prod1 = arr[lindex] * arr[index];
+    int prod2 = arr[rindex] * arr[index];
+
+    if (abs(prod1 - value) < abs(prod2 - value))
+        return lindex;
+    return rindex;
 }
 
 p getClosestPair(vector<int> &arr, int prod)
 {
     sort(arr.begin(), arr.end());
-    int neg = getNegativeCount(arr);
+    p closestPair;
+    bool initialized = false;
 
-    if (arr.size() - neg == 1 && neg == 1)
-        return make_pair(0, 1);
-    if (arr.size() - neg == 0)
-        return findNegPair(arr, neg, prod);
-    if (neg == 0)
-        return findPosPair(arr, neg, prod);
-
-    return getSmallestPair(arr, findNegPair(arr, neg, prod), findPosPair(arr, neg, prod), prod);
+    for (int i = 0; i < (int)arr.size(); i++)
+    {
+        int j = findClosestProductIndex(arr, i, prod);
+        if (!initialized)
+        {
+            closestPair = make_pair(i, j);
+            initialized = true;
+        }
+        else
+        {
+            int prod1 = arr[i] * arr[j];
+            int closestProd = arr[closestPair.first] * arr[closestPair.second];
+            if (abs(prod1 - prod) < abs(closestProd - prod))
+                closestPair = make_pair(i, j);
+        }
+    }
+    return closestPair;
 }
 
 int main()
@@ -97,6 +111,24 @@ int main()
     result = getClosestPair(arr, 8);
     cout << endl
          << "A: {-2, -4, 5, 3, 5, 8}, P: 8" << endl
+         << "X1: " << arr[result.first] << "\tX2: " << arr[result.second] << endl;
+
+    arr = {2, -4, 5};
+    result = getClosestPair(arr, 9);
+    cout << endl
+         << "A: {2, -4, 5}, P: 9" << endl
+         << "X1: " << arr[result.first] << "\tX2: " << arr[result.second] << endl;
+
+    arr = {-2, -4, 5};
+    result = getClosestPair(arr, 9);
+    cout << endl
+         << "A: {-2, -4, 5}, P: 9" << endl
+         << "X1: " << arr[result.first] << "\tX2: " << arr[result.second] << endl;
+
+    arr = {-1, -8, 1};
+    result = getClosestPair(arr, 1);
+    cout << endl
+         << "A: {-1, -8, 1}, P: 1" << endl
          << "X1: " << arr[result.first] << "\tX2: " << arr[result.second] << endl;
 
     arr = {-2, 2};
