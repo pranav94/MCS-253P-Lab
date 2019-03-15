@@ -40,15 +40,11 @@ void nextPermutation(vector<int> &input)
 {
     int i = findBegin(input);
     if (i < 0)
-        reverse(input.begin(), input.end());
+        i = -1;
     else
-    {
-        int j = findEnd(input, i);
-        swap(input[i], input[j]);
-        reverse(input.begin() + i + 1, input.end());
-    }
+        swap(input[i], input[findEnd(input, i)]);
+    reverse(input.begin() + i + 1, input.end());
     printNumber(input);
-    return;
 }
 
 int main()
