@@ -30,17 +30,15 @@ string getFileName()
 class TreeNode
 {
   public:
-    int data;
-    TreeNode *left;
-    TreeNode *right;
+    int data = 0;
+    TreeNode *left = nullptr;
+    TreeNode *right = nullptr;
     TreeNode(int data);
 };
 
 TreeNode::TreeNode(int data)
 {
     this->data = data;
-    this->left = nullptr;
-    this->right = nullptr;
 }
 
 typedef vector<TreeNode *> Level;
@@ -49,9 +47,11 @@ typedef vector<Level> Levels;
 class BinaryTree
 {
   public:
-    TreeNode *root;
-    BinaryTree() { root = nullptr; };
+    TreeNode *root = nullptr;
+    BinaryTree() {};
     ~BinaryTree();
+    BinaryTree(const BinaryTree&);
+    BinaryTree& operator=(const BinaryTree&);
     void readTree();
     void writeTree();
     void loadTree(LevelString levels);

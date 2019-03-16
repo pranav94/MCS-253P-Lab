@@ -5,8 +5,8 @@ using namespace std;
 class SpiralMatrix
 {
   private:
-    int m, n;
-    vector<vector<int>> matrix;
+    int m = 0, n = 0;
+    vector<vector<int>> matrix = vector<vector<int>>();
     void right(int &i, int &j, int &c, int offset, int limit);
     void down(int &i, int &j, int &c, int offset, int limit);
     void left(int &i, int &j, int &c, int offset, int limit);
