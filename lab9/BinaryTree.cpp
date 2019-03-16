@@ -5,7 +5,9 @@
 #include <vector>
 using namespace std;
 
-void tokenzie(vector<string> &levelNodes, string levelString)
+typedef vector<string> LevelString;
+
+void tokenzie(LevelString &levelNodes, string levelString)
 {
     stringstream ss;
     ss << levelString;
@@ -41,15 +43,18 @@ TreeNode::TreeNode(int data)
     this->right = nullptr;
 }
 
+typedef vector<TreeNode *> Level;
+typedef vector<Level> Levels;
+
 class BinaryTree
 {
   public:
     TreeNode *root;
-    BinaryTree();
+    BinaryTree() { root = nullptr; };
     ~BinaryTree();
     void readTree();
     void writeTree();
-    void loadTree(vector<string> levels);
+    void loadTree(LevelString levels);
     void inorder();
     void preorder();
     void postorder();
@@ -58,14 +63,9 @@ class BinaryTree
     void inorder(TreeNode *root);
     void preorder(TreeNode *root);
     void postorder(TreeNode *root);
-    void levelorder(vector<vector<TreeNode *>> &levels, TreeNode *root, int level);
+    void levelorder(Levels &levels, TreeNode *root, int level);
     void deleteTree(TreeNode *root);
 };
-
-BinaryTree::BinaryTree()
-{
-    root = nullptr;
-}
 
 BinaryTree::~BinaryTree()
 {
@@ -74,10 +74,10 @@ BinaryTree::~BinaryTree()
 
 void BinaryTree::levelorder()
 {
-    vector<vector<TreeNode *>> levels;
+    Levels levels;
     levelorder(levels, root, 0);
     levels.pop_back();
-    for (vector<TreeNode *> &level : levels)
+    for (Level &level : levels)
     {
         for (TreeNode *&node : level)
             if (node != nullptr)
@@ -86,10 +86,10 @@ void BinaryTree::levelorder()
     }
 }
 
-void BinaryTree::levelorder(vector<vector<TreeNode *>> &levels, TreeNode *node, int level)
+void BinaryTree::levelorder(Levels &levels, TreeNode *node, int level)
 {
     if ((int)levels.size() == level)
-        levels.push_back(vector<TreeNode *>());
+        levels.push_back(Level());
     if (node == nullptr)
     {
         levels[level].push_back(nullptr);
@@ -100,7 +100,7 @@ void BinaryTree::levelorder(vector<vector<TreeNode *>> &levels, TreeNode *node, 
     levelorder(levels, node->right, level + 1);
 }
 
-void BinaryTree::loadTree(vector<string> levels)
+void BinaryTree::loadTree(LevelString levels)
 {
     if (levels.size() == 0)
     {
@@ -108,14 +108,14 @@ void BinaryTree::loadTree(vector<string> levels)
         return;
     }
     root = new TreeNode(stoi(levels[0]));
-    vector<vector<TreeNode *>> nodes;
-    nodes.push_back(vector<TreeNode *>());
+    Levels nodes;
+    nodes.push_back(Level());
     nodes[0].push_back(root);
     for (int level = 1; level < (int)levels.size(); level++)
     {
-        nodes.push_back(vector<TreeNode *>());
+        nodes.push_back(Level());
         int j = 0;
-        vector<string> levelNodes;
+        LevelString levelNodes;
         tokenzie(levelNodes, levels[level]);
         for (int i = 0; i < (int)nodes[level - 1].size(); i++)
         {
@@ -140,7 +140,7 @@ void BinaryTree::loadTree(vector<string> levels)
     }
 }
 
-void readLevels(vector<string> &levels)
+void readLevels(LevelString &levels)
 {
     string level;
     ifstream inputFile(getFileName());
@@ -155,7 +155,7 @@ void readLevels(vector<string> &levels)
 void BinaryTree::readTree()
 {
     string level;
-    vector<string> levels;
+    LevelString levels;
     readLevels(levels);
     loadTree(levels);
 }
@@ -163,20 +163,17 @@ void BinaryTree::readTree()
 void BinaryTree::writeTree()
 {
     string op = getFileName();
-    vector<vector<TreeNode *>> levels;
+    Levels levels;
     levelorder(levels, root, 0);
     ofstream ofile;
     ofile.open(op);
-    for (vector<TreeNode *> &level : levels)
+    for (Level &level : levels)
     {
         for (TreeNode *&node : level)
-        {
             if (node != nullptr)
                 ofile << node->data << ",";
             else
                 ofile << ",";
-        }
-
         ofile << endl;
     }
     ofile.close();
