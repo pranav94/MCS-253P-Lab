@@ -80,7 +80,7 @@ void BinaryTree::levelorder()
     for (vector<TreeNode *> &level : levels)
     {
         for (TreeNode *&node : level)
-            if(node != nullptr)
+            if (node != nullptr)
                 cout << node->data << " ";
         cout << endl;
     }
